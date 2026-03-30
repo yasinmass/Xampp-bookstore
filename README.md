@@ -2,19 +2,10 @@
 
 ## 🚀 Project Overview
 
-The **Online Bookstore Management System** is a full-stack web application developed using **PHP, MySQL, HTML, CSS, and JavaScript**.
-It allows users to browse books, manage a shopping cart, and place orders seamlessly.
+The **Online Bookstore Management System** is a full-stack web application built using **PHP, MySQL, HTML, CSS, and JavaScript**.
+It allows users to browse books, manage a shopping cart, and place orders.
 
-This project is designed based on an **ER Diagram** and demonstrates complete database integration with a functional user interface.
-
----
-
-## 🎯 Objectives
-
-* To design a relational database using ER modeling
-* To implement CRUD operations using PHP & MySQL
-* To build a responsive and user-friendly frontend
-* To simulate a real-world e-commerce workflow
+This project follows an **ER Diagram-based database design** and demonstrates complete frontend-backend integration.
 
 ---
 
@@ -23,83 +14,122 @@ This project is designed based on an **ER Diagram** and demonstrates complete da
 * **Frontend:** HTML, CSS, JavaScript
 * **Backend:** PHP
 * **Database:** MySQL
-* **Server:** XAMPP (Apache)
-
----
-
-## 🗂️ Database Design (ER Model)
-
-The system consists of the following entities:
-
-* **Customer** (customer_id, name, email, password)
-* **Author** (author_id, author_name)
-* **Book** (book_id, title, ISBN, price, author_id)
-* **Cart** (cart_id, customer_id, created_date)
-* **Cart Items** (cart_item_id, cart_id, book_id, quantity)
-* **Orders** (order_id, order_date, customer_id)
-* **Order Items** (order_item_id, order_id, book_id, quantity)
-
----
-
-## ✨ Features
-
-* 👤 User Registration & Login
-* 📚 View Books with Author Details
-* 🛒 Add to Cart / Remove from Cart
-* 📦 Place Orders
-* 📜 View Order History
-* 🔐 Session Management (Login/Logout)
+* **Server:** XAMPP
 
 ---
 
 ## 📁 Project Structure
 
+### 📂 xampp_hdocs/
+
+```bash
+add_to_cart.php
+authors.html
+books.html
+books.php
+cart.html
+cart.php
+db.php
+index.html
+login.html
+login.php
+login_process.php
+logout.php
+orders.html
+orders.php
+place_order.php
+register.html
+register.php
+register_process.php
+remove_from_cart.php
 ```
-bookstore/
-│── db.php
-│── login.php
-│── register.php
-│── books.php
-│── cart.php
-│── orders.php
-│── add_to_cart.php
-│── remove_from_cart.php
-│── place_order.php
-│── logout.php
-│── bookstore.sql
+
+### 📂 sql/
+
+```bash
+bookstore.sql
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Complete Setup Guide (Step-by-Step)
 
-### 1️⃣ Clone the Repository
+### ✅ Step 1 — Move Project Files
 
-```
-git clone https://github.com/your-username/bookstore.git
-```
+1. Copy all files from **xampp_hdocs folder**
+2. Paste into:
 
-### 2️⃣ Move to XAMPP Directory
-
-```
-C:\xampp\htdocs\bookstore
+```bash
+C:\xampp\htdocs\
 ```
 
-### 3️⃣ Start Server
+👉 Final path should look like:
 
-* Open XAMPP Control Panel
-* Start **Apache** and **MySQL**
-
-### 4️⃣ Import Database
-
-* Open: http://localhost/phpmyadmin
-* Create database: `bookstore`
-* Import `bookstore.sql`
-
-### 5️⃣ Run the Project
-
+```bash
+C:\xampp\htdocs\books.php
+C:\xampp\htdocs\login.php
+...
 ```
-http://localhost/bookstore/login.php
+
+---
+
+### ✅ Step 2 — Start XAMPP
+
+1. Open XAMPP Control Panel
+2. Start:
+
+   * **Apache**
+   * **MySQL**
+
+👉 Both should turn **green**
+
+---
+
+### ✅ Step 3 — Create Database
+
+1. Open browser:
+
+```bash
+http://localhost/phpmyadmin
+```
+
+2. Click **New**
+3. Enter database name:
+
+```bash
+bookstore
+```
+
+4. Click **Create**
+
+---
+
+### ✅ Step 4 — Import SQL File
+
+1. Click on **bookstore** database (left side)
+2. Go to **Import** tab
+3. Click **Choose File**
+4. Select:
+
+```bash
+sql/bookstore.sql
+```
+
+(Locate it from your downloaded project folder)
+
+5. Click **Go**
+
+👉 You should see:
+✔ Tables created successfully
+
+---
+
+### ✅ Step 5 — Run the Project
+
+Open in browser:
+
+```bash
+http://localhost/login.php
 ```
 
 ---
@@ -113,35 +143,46 @@ http://localhost/bookstore/login.php
 
 ## 🔄 Application Flow
 
-1. User registers or logs in
-2. Browses available books
+1. User logs in / registers
+2. Views available books
 3. Adds books to cart
 4. Places an order
 5. Views order history
 
 ---
 
+## ✨ Features
+
+* 👤 User Authentication (Login/Register)
+* 📚 Book Listing with Authors
+* 🛒 Cart Management
+* 📦 Order Placement
+* 📜 Order History
+* 🔐 Session Handling
+
+---
+
+## ⚠️ Important Notes
+
+* Ensure **MySQL is running in XAMPP**
+* If MySQL fails, check port issues (3306 conflict)
+* Make sure `db.php` has correct DB config:
+
+```bash
+localhost
+root
+(no password)
+bookstore
+```
+
+---
+
 ## 📌 Future Enhancements
 
 * 🔍 Search & filter books
-* 💳 Payment gateway integration
+* 💳 Payment system
 * 🧑‍💼 Admin dashboard
-* 📱 Responsive UI improvements
-
----
-
-## 🎓 Learning Outcomes
-
-* Understanding of full-stack development
-* Database design using ER diagrams
-* Backend integration with frontend
-* Session handling and CRUD operations
-
----
-
-## 📷 Screenshots
-
-*(Add your project screenshots here for better presentation)*
+* 📱 UI improvements
 
 ---
 
@@ -153,4 +194,4 @@ http://localhost/bookstore/login.php
 
 ## 📄 License
 
-This project is developed for educational purposes.
+This project is for educational purposes only.
