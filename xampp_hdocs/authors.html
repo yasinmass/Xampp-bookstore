@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Authors — PageTurn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --cream:#f5f0e8; --dark:#1a1208; --brown:#5c3d1e; --gold:#c8933a; --rust:#b84c24; --text:#2d1f0e; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--cream); color:var(--text); font-family:'DM Sans',sans-serif; }
+
+    nav { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:var(--dark); position:sticky; top:0; z-index:100; border-bottom:2px solid var(--gold); }
+    .nav-logo { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--gold); text-decoration:none; }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:var(--cream); text-decoration:none; font-size:0.95rem; font-weight:500; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-actions { display:flex; gap:1rem; align-items:center; }
+    .btn-nav { padding:0.5rem 1.2rem; border-radius:4px; font-size:0.9rem; font-weight:500; cursor:pointer; text-decoration:none; }
+    .btn-outline { border:1.5px solid var(--gold); color:var(--gold); background:transparent; }
+    .btn-fill { background:var(--gold); color:var(--dark); border:1.5px solid var(--gold); }
+    .cart-icon { color:var(--cream); font-size:1.3rem; text-decoration:none; position:relative; }
+    .cart-badge { position:absolute; top:-6px; right:-8px; background:var(--rust); color:#fff; font-size:0.65rem; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+    .page-header { background:var(--dark); padding:3rem; border-bottom:1px solid rgba(200,147,58,0.3); }
+    .breadcrumb { display:flex; gap:0.5rem; margin-bottom:0.8rem; font-size:0.85rem; }
+    .breadcrumb a { color:var(--gold); text-decoration:none; }
+    .breadcrumb span { color:#666; }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--cream); margin-bottom:0.5rem; }
+    .page-header p { color:#a09080; }
+
+    .content { padding:3rem; }
+    .search-wrap { max-width:500px; margin:0 auto 3rem; }
+    .search-bar { display:flex; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+    .search-bar input { flex:1; padding:0.9rem 1.2rem; border:none; outline:none; font-size:0.95rem; font-family:'DM Sans',sans-serif; }
+    .search-bar button { padding:0.9rem 1.5rem; background:var(--dark); border:none; color:var(--cream); font-weight:500; cursor:pointer; }
+
+    .authors-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:1.8rem; }
+    .author-card { background:#fff; border-radius:10px; padding:2rem 1.5rem; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.07); transition:all 0.3s; cursor:pointer; border-bottom:3px solid transparent; }
+    .author-card:hover { transform:translateY(-6px); box-shadow:0 12px 32px rgba(0,0,0,0.12); border-bottom-color:var(--gold); }
+    .author-avatar { width:90px; height:90px; border-radius:50%; margin:0 auto 1.2rem; display:flex; align-items:center; justify-content:center; font-size:2.5rem; border:3px solid var(--cream); }
+    .author-card h3 { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.3rem; color:var(--dark); }
+    .author-id { font-size:0.78rem; color:#bbb; margin-bottom:0.5rem; }
+    .author-genre { display:inline-block; background:var(--cream); color:var(--brown); font-size:0.78rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:20px; margin-bottom:1rem; }
+    .author-stats { display:flex; justify-content:center; gap:2rem; margin-bottom:1.3rem; }
+    .stat { text-align:center; }
+    .stat .num { font-weight:700; font-size:1.1rem; color:var(--dark); }
+    .stat .label { font-size:0.75rem; color:#aaa; }
+    .btn-view { padding:0.6rem 1.5rem; background:var(--dark); color:var(--cream); border:none; border-radius:4px; font-size:0.88rem; font-weight:500; cursor:pointer; transition:background 0.2s; }
+    .btn-view:hover { background:var(--brown); }
+
+    @media(max-width:900px) { nav{padding:1rem 1.5rem;} .nav-links{display:none;} .content{padding:2rem 1.5rem;} }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">📚 PageTurn</a>
+  <ul class="nav-links">
+    <li><a href="books.html">Books</a></li>
+    <li><a href="authors.html" class="active">Authors</a></li>
+    <li><a href="orders.html">My Orders</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="cart-icon">🛒 <span class="cart-badge">3</span></a>
+    <a href="login.html" class="btn-nav btn-outline">Login</a>
+    <a href="register.html" class="btn-nav btn-fill">Sign Up</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Authors</span></div>
+  <h1>Our Authors</h1>
+  <p>Meet the brilliant minds behind our collection</p>
+</div>
+
+<div class="content">
+  <div class="search-wrap">
+    <div class="search-bar">
+      <input type="text" placeholder="Search authors by name…"/>
+      <button>Search</button>
+    </div>
+  </div>
+
+  <div class="authors-grid">
+    <div class="author-card">
+      <div class="author-avatar" style="background:#fde8d0;">✍️</div>
+      <h3>Matt Haig</h3>
+      <p class="author-id">Author ID: #A-001</p>
+      <span class="author-genre">Fiction · Self-Help</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">12</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.8</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar" style="background:#d0e8fd;">🔭</div>
+      <h3>Carl Sagan</h3>
+      <p class="author-id">Author ID: #A-002</p>
+      <span class="author-genre">Science · Astronomy</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">8</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.9</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar" style="background:#fdd0d0;">📜</div>
+      <h3>Yuval Noah Harari</h3>
+      <p class="author-id">Author ID: #A-003</p>
+      <span class="author-genre">History · Philosophy</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">5</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.7</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar" style="background:#d0fde8;">🌿</div>
+      <h3>Robin Wall Kimmerer</h3>
+      <p class="author-id">Author ID: #A-004</p>
+      <span class="author-genre">Nature · Science</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">4</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.8</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar" style="background:#f0d0fd;">🧠</div>
+      <h3>Daniel Kahneman</h3>
+      <p class="author-id">Author ID: #A-005</p>
+      <span class="author-genre">Psychology · Economics</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">3</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.6</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar" style="background:#fdfdd0;">🌊</div>
+      <h3>Ernest Hemingway</h3>
+      <p class="author-id">Author ID: #A-006</p>
+      <span class="author-genre">Classic · Fiction</span>
+      <div class="author-stats">
+        <div class="stat"><div class="num">15</div><div class="label">Books</div></div>
+        <div class="stat"><div class="num">4.5</div><div class="label">Avg Rating</div></div>
+      </div>
+      <button class="btn-view" onclick="location.href='books.html'">View Books</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

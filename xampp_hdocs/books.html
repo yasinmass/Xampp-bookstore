@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Books — PageTurn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --cream:#f5f0e8; --dark:#1a1208; --brown:#5c3d1e; --gold:#c8933a; --rust:#b84c24; --sage:#6b8c6e; --text:#2d1f0e; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--cream); color:var(--text); font-family:'DM Sans',sans-serif; }
+
+    nav { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:var(--dark); position:sticky; top:0; z-index:100; border-bottom:2px solid var(--gold); }
+    .nav-logo { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--gold); text-decoration:none; }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:var(--cream); text-decoration:none; font-size:0.95rem; font-weight:500; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-actions { display:flex; gap:1rem; align-items:center; }
+    .btn-nav { padding:0.5rem 1.2rem; border-radius:4px; font-size:0.9rem; font-weight:500; cursor:pointer; text-decoration:none; transition:all 0.2s; }
+    .btn-outline { border:1.5px solid var(--gold); color:var(--gold); background:transparent; }
+    .btn-fill { background:var(--gold); color:var(--dark); border:1.5px solid var(--gold); }
+    .cart-icon { color:var(--cream); font-size:1.3rem; text-decoration:none; position:relative; }
+    .cart-badge { position:absolute; top:-6px; right:-8px; background:var(--rust); color:#fff; font-size:0.65rem; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+    .page-header { background:var(--dark); padding:3rem; border-bottom:1px solid rgba(200,147,58,0.3); }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--cream); margin-bottom:0.5rem; }
+    .page-header p { color:#a09080; font-size:0.95rem; }
+    .breadcrumb { display:flex; gap:0.5rem; margin-bottom:1rem; font-size:0.85rem; }
+    .breadcrumb a { color:var(--gold); text-decoration:none; }
+    .breadcrumb span { color:#666; }
+
+    .content { display:flex; gap:0; min-height:80vh; }
+
+    /* SIDEBAR */
+    .sidebar { width:260px; flex-shrink:0; padding:2rem 1.5rem; background:#fff; border-right:1px solid #e8e0d4; }
+    .filter-section { margin-bottom:2rem; }
+    .filter-section h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:1.5px; color:#aaa; margin-bottom:1rem; }
+    .filter-option { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem; font-size:0.9rem; color:var(--text); cursor:pointer; }
+    .filter-option input { accent-color:var(--gold); }
+    .price-range { display:flex; flex-direction:column; gap:0.5rem; }
+    .price-range input[type=range] { accent-color:var(--gold); width:100%; }
+    .price-labels { display:flex; justify-content:space-between; font-size:0.82rem; color:#888; }
+    .btn-apply { width:100%; padding:0.65rem; background:var(--dark); color:var(--cream); border:none; border-radius:4px; font-size:0.88rem; font-weight:500; cursor:pointer; margin-top:0.5rem; transition:background 0.2s; }
+    .btn-apply:hover { background:var(--brown); }
+
+    /* MAIN */
+    .main { flex:1; padding:2rem 2.5rem; }
+    .toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.8rem; flex-wrap:wrap; gap:1rem; }
+    .result-count { font-size:0.9rem; color:#888; }
+    .toolbar-right { display:flex; gap:1rem; align-items:center; }
+    .sort-select { padding:0.5rem 0.9rem; border:1.5px solid #ddd; border-radius:4px; font-size:0.88rem; font-family:'DM Sans',sans-serif; color:var(--text); background:#fff; outline:none; cursor:pointer; }
+    .sort-select:focus { border-color:var(--gold); }
+    .search-input { padding:0.5rem 1rem; border:1.5px solid #ddd; border-radius:4px; font-size:0.88rem; font-family:'DM Sans',sans-serif; outline:none; width:200px; }
+    .search-input:focus { border-color:var(--gold); }
+
+    .books-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1.8rem; }
+    .book-card { background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07); transition:all 0.3s; }
+    .book-card:hover { transform:translateY(-6px); box-shadow:0 12px 32px rgba(0,0,0,0.13); }
+    .book-img { height:220px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative; }
+    .book-badge { position:absolute; top:10px; left:10px; background:var(--rust); color:#fff; font-size:0.65rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:2px; text-transform:uppercase; letter-spacing:0.5px; }
+    .book-info { padding:1rem; }
+    .book-info h3 { font-family:'Playfair Display',serif; font-size:0.95rem; margin-bottom:0.3rem; color:var(--dark); }
+    .author { font-size:0.8rem; color:#888; margin-bottom:0.4rem; }
+    .isbn { font-size:0.75rem; color:#bbb; margin-bottom:0.6rem; }
+    .price-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem; }
+    .price { font-weight:600; color:var(--rust); font-size:1rem; }
+    .rating { font-size:0.78rem; color:#c8933a; }
+    .btn-add { width:100%; padding:0.55rem; background:var(--dark); color:var(--cream); border:none; border-radius:4px; font-size:0.85rem; font-weight:500; cursor:pointer; transition:background 0.2s; }
+    .btn-add:hover { background:var(--brown); }
+
+    .pagination { display:flex; justify-content:center; gap:0.5rem; margin-top:3rem; }
+    .page-btn { padding:0.5rem 0.9rem; border:1.5px solid #ddd; border-radius:4px; font-size:0.88rem; cursor:pointer; transition:all 0.2s; background:#fff; color:var(--text); }
+    .page-btn:hover, .page-btn.active { background:var(--dark); color:var(--cream); border-color:var(--dark); }
+
+    @media(max-width:900px) { nav{padding:1rem 1.5rem;} .nav-links{display:none;} .sidebar{display:none;} .main{padding:1.5rem;} }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">📚 PageTurn</a>
+  <ul class="nav-links">
+    <li><a href="books.html" class="active">Books</a></li>
+    <li><a href="authors.html">Authors</a></li>
+    <li><a href="orders.html">My Orders</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="cart-icon">🛒 <span class="cart-badge">3</span></a>
+    <a href="login.html" class="btn-nav btn-outline">Login</a>
+    <a href="register.html" class="btn-nav btn-fill">Sign Up</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Books</span></div>
+  <h1>All Books</h1>
+  <p>Explore our complete collection — 1,240 titles available</p>
+</div>
+
+<div class="content">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="filter-section">
+      <h3>Category</h3>
+      <label class="filter-option"><input type="checkbox" checked/> Fiction</label>
+      <label class="filter-option"><input type="checkbox"/> Non-Fiction</label>
+      <label class="filter-option"><input type="checkbox"/> Science</label>
+      <label class="filter-option"><input type="checkbox"/> History</label>
+      <label class="filter-option"><input type="checkbox"/> Self-Help</label>
+      <label class="filter-option"><input type="checkbox"/> Fantasy</label>
+      <label class="filter-option"><input type="checkbox"/> Children</label>
+    </div>
+    <div class="filter-section">
+      <h3>Price Range</h3>
+      <div class="price-range">
+        <input type="range" min="0" max="2000" value="1000"/>
+        <div class="price-labels"><span>₹0</span><span>₹2000</span></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <h3>Rating</h3>
+      <label class="filter-option"><input type="checkbox"/> ⭐⭐⭐⭐⭐</label>
+      <label class="filter-option"><input type="checkbox"/> ⭐⭐⭐⭐+</label>
+      <label class="filter-option"><input type="checkbox"/> ⭐⭐⭐+</label>
+    </div>
+    <button class="btn-apply">Apply Filters</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="toolbar">
+      <span class="result-count">Showing 1–12 of 1,240 books</span>
+      <div class="toolbar-right">
+        <input class="search-input" type="text" placeholder="🔍 Search books…"/>
+        <select class="sort-select">
+          <option>Sort: Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest First</option>
+          <option>Best Rated</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="books-grid">
+      <div class="book-card">
+        <div class="book-img" style="background:#fde8d0;"><span class="book-badge">New</span>📖</div>
+        <div class="book-info">
+          <h3>The Midnight Library</h3>
+          <p class="author">Matt Haig</p>
+          <p class="isbn">ISBN: 978-0525559474</p>
+          <div class="price-row"><span class="price">₹399</span><span class="rating">★★★★★</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-img" style="background:#d0e8fd;">🔭</div>
+        <div class="book-info">
+          <h3>Cosmos</h3>
+          <p class="author">Carl Sagan</p>
+          <p class="isbn">ISBN: 978-0345539434</p>
+          <div class="price-row"><span class="price">₹549</span><span class="rating">★★★★★</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-img" style="background:#d0fde8;"><span class="book-badge">Sale</span>🌿</div>
+        <div class="book-info">
+          <h3>Braiding Sweetgrass</h3>
+          <p class="author">Robin Wall Kimmerer</p>
+          <p class="isbn">ISBN: 978-1571313560</p>
+          <div class="price-row"><span class="price">₹479</span><span class="rating">★★★★☆</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-img" style="background:#fdd0d0;">🏛️</div>
+        <div class="book-info">
+          <h3>Sapiens</h3>
+          <p class="author">Yuval Noah Harari</p>
+          <p class="isbn">ISBN: 978-0062316097</p>
+          <div class="price-row"><span class="price">₹599</span><span class="rating">★★★★★</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-img" style="background:#f0d0fd;">🧠</div>
+        <div class="book-info">
+          <h3>Thinking, Fast and Slow</h3>
+          <p class="author">Daniel Kahneman</p>
+          <p class="isbn">ISBN: 978-0374533557</p>
+          <div class="price-row"><span class="price">₹449</span><span class="rating">★★★★☆</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-img" style="background:#fdfdd0;"><span class="book-badge">New</span>🌊</div>
+        <div class="book-info">
+          <h3>The Old Man and the Sea</h3>
+          <p class="author">Ernest Hemingway</p>
+          <p class="isbn">ISBN: 978-0684801223</p>
+          <div class="price-row"><span class="price">₹299</span><span class="rating">★★★★★</span></div>
+          <button class="btn-add" onclick="location.href='cart.html'">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">…</button>
+      <button class="page-btn">104</button>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
