@@ -188,8 +188,7 @@ bookstore
 
 ## 👨‍💻 Author
 
-**Yasin Mass**
-mohammed yasin A
+**MOHAMMED YASIN A**
 
 ---
 
